@@ -8,7 +8,7 @@
 
 
 
-## 🚨 The Problem Statement: The MSME Cash Flow Crisis
+## 🚨 The Problem Statement: Invoice Financing for MSMEs(FT004)
 Micro, Small, and Medium Enterprises (MSMEs) form the backbone of the Indian economy, yet they are systematically starved of working capital. The root of this crisis lies in the standard B2B supply chain payment cycle. 
 
 When an MSME (the Seller) delivers goods or services to a large corporate enterprise (the Buyer), they do not get paid immediately. Instead, they are issued an invoice with a maturity period of 60 to 90 days. 
@@ -43,3 +43,4 @@ We connect cash-strapped Sellers with institutional and retail Lenders, wrapped 
 
 ---
 *Note: This project was built from scratch within a 24-hour sprint.*
+
