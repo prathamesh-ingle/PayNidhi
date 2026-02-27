@@ -2,18 +2,18 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import SellerNav from "../../components/seller/SellerNav";
 import SellerHeader from "../../components/seller/SellerHeader";
 import SellerFooter from "../../components/seller/SellerFooter";
-import { 
-  ArrowRight, 
-  ShieldCheck, 
-  UploadCloud, 
-  Receipt, 
-  FileText, 
-  X, 
-  CheckCircle2, 
-  Sparkles, 
-  AlertCircle, 
-  Search, 
-  Loader2, 
+import {
+  ArrowRight,
+  ShieldCheck,
+  UploadCloud,
+  Receipt,
+  FileText,
+  X,
+  CheckCircle2,
+  Sparkles,
+  AlertCircle,
+  Search,
+  Loader2,
   Zap,
   Plus
 } from "lucide-react";
@@ -65,7 +65,7 @@ const SellerDashboard = () => {
   const fileInputRef = useRef(null);
   const [file, setFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [status, setStatus] = useState("idle"); 
+  const [status, setStatus] = useState("idle");
   const [scanStepIndex, setScanStepIndex] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
   const [extractedData, setExtractedData] = useState(null);
@@ -199,7 +199,7 @@ const SellerDashboard = () => {
   };
 
   const closeModal = () => {
-    if (status === "scanning") return; 
+    if (status === "scanning") return;
     setIsModalOpen(false);
     setTimeout(() => {
       setFile(null);
@@ -286,17 +286,17 @@ const SellerDashboard = () => {
       });
 
       const data = await res.json();
-      await new Promise(resolve => setTimeout(resolve, 5500)); 
+      await new Promise(resolve => setTimeout(resolve, 5500));
 
       if (!res.ok) throw new Error(data.error || "Verification failed");
 
       setExtractedData(data.data);
       setStatus("success");
       toast.success("Invoice successfully verified!");
-      
+
       // Optionally refresh invoices list here
       // fetchInvoices(); 
-      
+
     } catch (error) {
       await new Promise(resolve => setTimeout(resolve, 4000));
       setErrorMessage(error.message);
@@ -310,11 +310,10 @@ const SellerDashboard = () => {
   const renderIdleState = () => (
     <div className="animate-in fade-in duration-500 w-full max-w-md mx-auto text-center relative z-10">
       {!file ? (
-        <div 
+        <div
           onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}
-          className={`group w-full border-2 border-dashed rounded-[1.5rem] p-10 flex flex-col items-center transition-all duration-300 ease-out ${
-            isDragging ? 'border-[#47C4B7] bg-[#D9FAF2]/60 scale-[1.02] shadow-[0_0_20px_rgba(71,196,183,0.2)]' : 'border-slate-200/80 bg-slate-50/50 hover:bg-[#F3FBF9] hover:border-[#7FE0CC]/80'
-          }`}
+          className={`group w-full border-2 border-dashed rounded-[1.5rem] p-10 flex flex-col items-center transition-all duration-300 ease-out ${isDragging ? 'border-[#47C4B7] bg-[#D9FAF2]/60 scale-[1.02] shadow-[0_0_20px_rgba(71,196,183,0.2)]' : 'border-slate-200/80 bg-slate-50/50 hover:bg-[#F3FBF9] hover:border-[#7FE0CC]/80'
+            }`}
         >
           <div className="w-16 h-16 bg-white text-[#0f8f79] rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-sm border border-slate-100 group-hover:-translate-y-1 group-hover:shadow-[0_4px_12px_rgba(15,143,121,0.15)] transition-all duration-300">
             <UploadCloud size={30} strokeWidth={2} />
@@ -338,11 +337,11 @@ const SellerDashboard = () => {
           </div>
           <h3 className="text-base font-semibold text-slate-900 mb-1 truncate px-4">{file.name}</h3>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100/60 mb-8">
-             <ShieldCheck size={12} className="text-emerald-500" />
-             <span className="text-[9px] font-bold text-emerald-700 uppercase tracking-widest">Integrity Verified</span>
+            <ShieldCheck size={12} className="text-emerald-500" />
+            <span className="text-[9px] font-bold text-emerald-700 uppercase tracking-widest">Integrity Verified</span>
           </div>
-          <button 
-            onClick={handleUpload} 
+          <button
+            onClick={handleUpload}
             className="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-[#47C4B7] to-[#0f8f79] text-white rounded-xl font-semibold text-[13px] shadow-[0_4px_16px_rgba(15,143,121,0.25)] hover:shadow-[0_6px_20px_rgba(15,143,121,0.35)] hover:-translate-y-[1px] active:translate-y-0 transition-all duration-300 group"
           >
             <Sparkles size={16} className="group-hover:animate-pulse" /> Start AI Scan
@@ -441,7 +440,7 @@ const SellerDashboard = () => {
 
         <main className={`flex-1 overflow-y-auto transition-all duration-1000 ${isModalOpen ? 'blur-xl scale-[0.98] opacity-30' : ''}`}>
           <div className="w-full max-w-6xl mx-auto px-4 py-6 space-y-6 pb-24 lg:pb-6">
-            
+
             {summaryError && (
               <div className="rounded-xl border border-rose-100 bg-rose-50 px-3 py-2 text-[11px] text-rose-700">
                 {summaryError}
@@ -482,11 +481,11 @@ const SellerDashboard = () => {
 
             {/* Main Content Grid */}
             <section className="grid lg:grid-cols-3 gap-6">
-              
+
               {/* LEFT COLUMN: Direct Upload + Recent Invoices */}
               <div className="lg:col-span-2 space-y-6">
-                
-                
+
+
 
                 <div className="bg-white border border-slate-200/60 rounded-[1.5rem] p-5 sm:p-6 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.02)] hover:shadow-md transition-all duration-200">
                   <div className="flex items-center justify-between mb-4">
@@ -551,12 +550,12 @@ const SellerDashboard = () => {
 
               {/* RIGHT COLUMN */}
               <div className="space-y-6">
-                
+
                 {/* Trust score */}
                 <div className="bg-white border border-slate-200/60 rounded-[1.5rem] p-5 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.02)] hover:shadow-md transition-all duration-200">
                   <h4 className="text-sm font-semibold text-slate-900 mb-1">Trust score</h4>
                   <p className="text-[11px] text-slate-500 mb-5">Your reliability signal for lenders.</p>
-                  
+
                   {loadingSummary ? (
                     <div className="animate-pulse flex items-center justify-between">
                       <div className="h-16 w-16 rounded-full border-[6px] border-slate-100 bg-slate-50" />
@@ -567,10 +566,10 @@ const SellerDashboard = () => {
                       <div className="relative flex items-center justify-center">
                         <svg className="w-16 h-16 transform -rotate-90">
                           <circle cx="32" cy="32" r="26" stroke="#f1f5f9" strokeWidth="6" fill="transparent" />
-                          <circle 
-                            cx="32" cy="32" r="26" stroke="#10b981" strokeWidth="6" fill="transparent" 
-                            strokeDasharray="163.3" strokeDashoffset={163.3 - ((animatedScore ?? 0) / 900) * 163.3} 
-                            className="transition-all duration-1000 ease-out" strokeLinecap="round" 
+                          <circle
+                            cx="32" cy="32" r="26" stroke="#10b981" strokeWidth="6" fill="transparent"
+                            strokeDasharray="163.3" strokeDashoffset={163.3 - ((animatedScore ?? 0) / 900) * 163.3}
+                            className="transition-all duration-1000 ease-out" strokeLinecap="round"
                           />
                         </svg>
                         <div className="absolute flex flex-col items-center justify-center">
@@ -591,24 +590,24 @@ const SellerDashboard = () => {
                   </button>
                 </div>
 
-                
+
               </div>
             </section>
           </div>
         </main>
-        <SellerFooter/>
+        <SellerFooter />
       </div>
 
       {/* --- FLOATING UPLOAD MODAL/POPUP --- */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
-          <div 
-            className={`absolute inset-0 bg-slate-900/30 backdrop-blur-sm transition-opacity duration-300 ease-out ${status === 'scanning' ? 'opacity-90 bg-slate-900/40' : 'opacity-100'}`} 
+          <div
+            className={`absolute inset-0 bg-slate-900/30 backdrop-blur-sm transition-opacity duration-300 ease-out ${status === 'scanning' ? 'opacity-90 bg-slate-900/40' : 'opacity-100'}`}
             onClick={status === 'idle' ? closeModal : undefined}
           />
-          
+
           <div className="relative w-full max-w-xl bg-white rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-slate-100 overflow-hidden flex flex-col animate-in zoom-in-95 fade-in slide-in-from-bottom-4 duration-300 ease-out">
-            
+
             {status === "scanning" && (
               <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                 <div className="absolute top-0 left-0 w-[80%] h-[80%] bg-gradient-to-br from-[#0f8f79]/15 to-transparent blur-[60px] animate-corner-tl" />
@@ -619,8 +618,8 @@ const SellerDashboard = () => {
             )}
 
             {status !== "scanning" && (
-              <button 
-                onClick={closeModal} 
+              <button
+                onClick={closeModal}
                 className="absolute top-5 right-5 z-50 w-8 h-8 bg-slate-50 text-slate-400 hover:bg-[#F3FBF9] hover:text-[#0f8f79] rounded-full flex items-center justify-center transition-all duration-200"
               >
                 <X size={16} strokeWidth={2.5} />
@@ -660,7 +659,8 @@ const SellerDashboard = () => {
       )}
 
       {/* --- GLOBAL CSS FOR SCANNER ANIMATIONS --- */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes corner-tl { 0%, 100% { transform: translate(-30%, -30%) scale(1); opacity: 0; } 50% { transform: translate(10%, 10%) scale(1.2); opacity: 0.8; } }
         @keyframes corner-tr { 0%, 100% { transform: translate(30%, -30%) scale(1); opacity: 0; } 50% { transform: translate(-10%, 10%) scale(1.2); opacity: 0.8; } }
         @keyframes corner-bl { 0%, 100% { transform: translate(-30%, 30%) scale(1); opacity: 0; } 50% { transform: translate(10%, -10%) scale(1.2); opacity: 0.8; } }
@@ -684,7 +684,7 @@ const StatCard = ({ label, value, helper, theme = "default" }) => {
     rose: "bg-rose-50/60 border-rose-200/60",
     default: "bg-white border-slate-200"
   };
-  
+
   const helperColor = {
     emerald: "text-emerald-600",
     indigo: "text-indigo-600",
