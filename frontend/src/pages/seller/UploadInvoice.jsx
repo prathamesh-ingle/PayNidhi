@@ -188,32 +188,31 @@ const UploadInvoice = () => {
   };
 
   // Handle Buyer Verification Request
-const handleVerifyInvoice = async (invoiceId) => {
-  const loadingToast = toast.loading("Initiating buyer verification...");
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/invoice/verify-buyer?invoiceId=${invoiceId}`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        // "Authorization": "Bearer "+ 
-      },
-    });
+  const handleVerifyInvoice = async (invoiceId) => {
+    const loadingToast = toast.loading("Initiating buyer verification...");
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/invoice/verify-buyer?invoiceId=${invoiceId}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) throw new Error(data.message || "Verification request failed.");
+      if (!res.ok) throw new Error(data.message || "Verification request failed.");
 
-    toast.success("Verification request sent to buyer!", { id: loadingToast });
-    fetchInvoices(); // Refresh the list to reflect any status changes
-  } catch (error) {
-    console.error("Verification Error:", error);
-    toast.error(error.message, { id: loadingToast });
-  }
-};
+      toast.success("Verification request sent to buyer!", { id: loadingToast });
+      fetchInvoices(); // Refresh the list to reflect any status changes
+    } catch (error) {
+      console.error("Verification Error:", error);
+      toast.error(error.message, { id: loadingToast });
+    }
+  };
 
   // -------------------------------------------------------------
-  // RENDER HELPERS (States remain same as your original)
+  // RENDER HELPERS
   // -------------------------------------------------------------
   const renderIdleState = () => (
     <div className="animate-in fade-in duration-500 w-full max-w-md mx-auto text-center relative z-10">
@@ -410,32 +409,38 @@ const handleVerifyInvoice = async (invoiceId) => {
 
                           {/* ACTIONS */}
                           <td className="px-6 py-4 text-right">
-  <div className="flex items-center justify-end gap-3">
-    {/* VERIFY BUTTON */}
-    <button 
-      onClick={() => handleVerifyInvoice(inv._id)}
-      disabled={inv.status === 'Verified'}
-      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wider transition-all
-        ${inv.status === 'Verified' 
-          ? 'bg-slate-100 text-slate-400 cursor-not-allowed' 
-          : 'bg-[#F3FBF9] text-[#0f8f79] hover:bg-[#0f8f79] hover:text-white border border-[#0f8f79]/20 shadow-sm'
-        }`}
-      title="Request Buyer Verification"
-    >
-      <ShieldCheck size={14} />
-      {inv.status === 'Verified' ? 'Verified' : 'Verify'}
-    </button>
+                            <div className="flex items-center justify-end gap-3">
+                              {/* VERIFY BUTTON WITH STRICT DISABLED LOGIC */}
+                              <button 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleVerifyInvoice(inv._id);
+                                }}
+                                disabled={inv.status !== 'Pending_Buyer_Approval'}
+                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wider transition-all
+                                  ${inv.status !== 'Pending_Buyer_Approval' 
+                                    ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-transparent' 
+                                    : 'bg-[#F3FBF9] text-[#0f8f79] hover:bg-[#0f8f79] hover:text-white border border-[#0f8f79]/20 shadow-sm'
+                                  }`}
+                                title={inv.status === 'Pending_Buyer_Approval' ? "Request Buyer Verification" : "Verification not available"}
+                              >
+                                <ShieldCheck size={14} />
+                                {inv.status === 'Verified' ? 'Verified' : 'Verify'}
+                              </button>
 
-    {/* DELETE BUTTON */}
-    <button 
-      onClick={() => handleDeleteInvoice(inv._id)}
-      className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all border border-transparent hover:border-rose-100"
-      title="Delete Invoice"
-    >
-      <Trash2 size={16} />
-    </button>
-  </div>
-</td>
+                              {/* DELETE BUTTON */}
+                              <button 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDeleteInvoice(inv._id);
+                                }}
+                                className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all border border-transparent hover:border-rose-100"
+                                title="Delete Invoice"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -449,7 +454,7 @@ const handleVerifyInvoice = async (invoiceId) => {
         <div className="flex-none hidden lg:block"><SellerFooter /></div>
       </div>
 
-      {/* MODAL (Render States Remain the same as provided earlier) */}
+      {/* MODAL */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className={`absolute inset-0 bg-slate-900/30 backdrop-blur-sm transition-all ${status === 'scanning' ? 'opacity-90' : 'opacity-100'}`} onClick={status === 'idle' ? closeModal : undefined} />
@@ -463,8 +468,6 @@ const handleVerifyInvoice = async (invoiceId) => {
               {status === "idle" && renderIdleState()}
               {status === "scanning" && renderScanningState()}
               {status === "success" && renderSuccessState()}
-              {/* {status === "error" && renderErrorState()} */}
-              {/* {status === "error" && renderIdleState()} */}
             </div>
           </div>
         </div>
