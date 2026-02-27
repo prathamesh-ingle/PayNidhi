@@ -12,6 +12,7 @@ import connectDB from "./lib/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import invoiceRoutes  from "./routes/invoice.routes.js"
 import sellerRoutes from "./routes/seller.routes.js"
+import lenderRoutes from "./routes/lender.routes.js"
 
 // ES module __dirname fix
 const __filename = fileURLToPath(import.meta.url);
@@ -39,6 +40,7 @@ app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/api/auth", authRoutes);
 app.use("/api/seller", sellerRoutes);
 app.use("/api/invoice", invoiceRoutes);
+app.use("/api/lender", lenderRoutes);
 
 const PORT = process.env.PORT || 5001;
 
