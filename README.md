@@ -39,7 +39,7 @@ We connect cash-strapped Sellers with institutional and retail Lenders, wrapped 
 * **Sanket Bochare**
 * **Prathamesh Ingle**
 * **Kartik Shivankar**
-* **[Team Member 4]**
+* **Gaurav Patil**
 
 ---
 *Note: This project was built from scratch within a 24-hour sprint.*
