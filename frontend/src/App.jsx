@@ -28,6 +28,16 @@ import LenderBidsPage from "./pages/lender/LenderBidsPage";
 import LenderWallet from "./pages/lender/LenderWallet";
 // import LenderSettings from "./pages/lender/LenderSettings";
 
+import AdminLoginPage from "./pages/admin/AdminLoginPage";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminSellers from "./pages/admin/AdminSellers";
+import AdminLenders from "./pages/admin/AdminLenders";
+import AdminNOAReview from "./pages/admin/AdminNOAReview";
+import AdminSettlements from "./pages/admin/AdminSettlements";
+import AdminMasterLedger from "./pages/admin/AdminMasterLedger";
+import AdminLayout from "./layouts/AdminLayout";
+
+
 
 function App() {
   return (
@@ -44,7 +54,8 @@ function App() {
         {/* Auth pages */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+
         {/* Seller protected area */}
         <Route element={<ProtectedRoute allowedRoles={["seller"]} />}>
           <Route path="/seller/onboarding" element={<SellerOnboarding />} />
@@ -64,6 +75,18 @@ function App() {
           <Route path="/lender/bids" element={<LenderBidsPage />} />
           <Route path="/lender/wallet" element={<LenderWallet />} />
           {/* <Route path="/lender/settings" element={<LenderSettings />} /> */}
+        </Route>
+
+        {/* Admin protected area */}
+        <Route element={<ProtectedRoute allowedRoles={["superadmin", "admin"]} />}>
+          <Route element={<AdminLayout />}>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/sellers" element={<AdminSellers />} />
+            <Route path="/admin/lenders" element={<AdminLenders />} />
+            <Route path="/admin/noa-review" element={<AdminNOAReview />} />
+            <Route path="/admin/settlements" element={<AdminSettlements />} />
+            <Route path="/admin/ledger" element={<AdminMasterLedger />} />
+          </Route>
         </Route>
 
       </Routes>
