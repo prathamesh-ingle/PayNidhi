@@ -36,12 +36,14 @@ We connect cash-strapped Sellers with institutional and retail Lenders, wrapped 
 * **Security:** JWT-based Role Authentication (Admin, Seller, Lender)
 
 ## 👥 The Team
+
+* **Kartik Shivankar**
 * **Sanket Bochare**
 * **Prathamesh Ingle**
-* **Kartik Shivankar**
 * **Gaurav Patil**
 
 ---
-*Note: This project was built from scratch within a 24-hour sprint.*
+
+
 
 
