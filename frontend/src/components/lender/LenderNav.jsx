@@ -20,7 +20,7 @@ const MENU_ITEMS = [
   { key: "wallet", icon: Wallet, label: "Wallet" }, 
 ];
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";;
 
 const LenderNav = ({
   activeKey = "overview",

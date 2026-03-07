@@ -17,13 +17,15 @@ const generateAdminToken = (id, role) => {
   });
 };
 
-const sendAdminCookie = (res, token) => {
+const sendAuthCookie = (res, token) => {
+  const isProduction = process.env.NODE_ENV === "production";
+  
   res.cookie("token", token, {
     httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: isProduction, // MUST be true in production (requires HTTPS)
+    sameSite: isProduction ? "none" : "lax", // "none" allows cross-origin cookies
     path: "/",
-    maxAge: 24 * 60 * 60 * 1000, // 1 Day in milliseconds
+    maxAge: 30 * 24 * 60 * 60 * 1000, 
   });
 };
 

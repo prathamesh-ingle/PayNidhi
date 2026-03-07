@@ -13,7 +13,7 @@ import {
 } from "recharts";
 import { motion, AnimatePresence } from "framer-motion";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";
 
 // Animation Variants defined locally to fix the SyntaxError
 const containerVariants = {

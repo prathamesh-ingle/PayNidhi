@@ -25,7 +25,7 @@ import SellerHeader from "../../components/seller/SellerHeader";
 import SellerFooter from "../../components/seller/SellerFooter";
 
 // const API_BASE_URL = "http://localhost:5001";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";
 
 const SCAN_STEPS = [
   "Initializing AI Vision Engine...",
