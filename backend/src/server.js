@@ -39,17 +39,13 @@ if (process.env.FRONTEND_URL) {
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // !origin allows server-to-server requests (like Postman or mobile apps)
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.error(`❌ CORS blocked request from origin: ${origin}`);
-        callback(new Error("CORS policy blocked this request"));
-      }
-    },
+    origin: [
+      "http://localhost:5173", 
+      "https://pay-nidhi.vercel.app"
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
 
