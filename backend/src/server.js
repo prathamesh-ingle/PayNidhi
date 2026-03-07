@@ -5,6 +5,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
+import helmet from "helmet"; // 👈 Added for security
 import { startCronJobs } from "./utils/settlementEngine.js";
 import connectDB from "./lib/db.js";
 
@@ -17,24 +18,38 @@ import paymentRoutes from "./routes/payment.routes.js";
 import sellerDashboardRoutes from "./routes/sellerDashboard.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 
-// ES module __dirname fix
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
+// 1. 🛡️ Security Headers
+app.use(helmet({ crossOriginResourcePolicy: false }));
+
+// 2. 🌐 Dynamic CORS Configuration
+const allowedOrigins = [
+  "http://localhost:5173", // Local dev
+  process.env.FRONTEND_URL  // Production frontend (e.g., https://paynidhi.vercel.app)
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS policy blocked this request"));
+      }
+    },
     credentials: true,
-  }),
+  })
 );
 
 app.use(express.json());
 app.use(cookieParser());
 
-// Serve uploaded files (PDFs)
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+// Serve uploaded files (PDFs/Images)
+app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // API routes
 app.use("/api/admin", adminRoutes);
@@ -43,7 +58,6 @@ app.use("/api/invoice", invoiceRoutes);
 app.use("/api/lender", lenderRoutes);
 app.use("/api/seller", sellerRoutes);
 app.use("/api/payment", paymentRoutes);
-app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/api", sellerDashboardRoutes);
 
 const PORT = process.env.PORT || 5001;

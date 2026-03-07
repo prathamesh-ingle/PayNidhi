@@ -19,7 +19,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
 // const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";
 
 // --- FIXED: Added missing COLORS definition ---
 const COLORS = ["#0f8f79", "#47C4B7", "#6366f1"];

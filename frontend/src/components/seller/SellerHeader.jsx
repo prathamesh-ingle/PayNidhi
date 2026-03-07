@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 // ✅ Fetching API URL from .env file securely
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";
 
 const SellerHeader = ({ onLogout, onToggleSidebar }) => {
   const { user } = useAuth();
