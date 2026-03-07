@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 // const API_BASE_URL = "http://localhost:5001";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";
 // ✅ ADDED: Custom PDF Viewer that securely fetches the file and stops auto-downloading
 const SafePdfViewer = ({ filePath, className, fallbackSize = 40 }) => {
   const [pdfUrl, setPdfUrl] = useState(null);

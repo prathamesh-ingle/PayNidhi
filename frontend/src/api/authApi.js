@@ -1,6 +1,6 @@
 // frontend/src/api/authApi.js
 // const API_BASE_URL = "http://localhost:5001/api"; // adjust for prod
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";
 
 
 const handleJson = async (res) => {

@@ -6,7 +6,7 @@ import { LogOut, Settings, Bell, User2, Menu, ChevronDown } from "lucide-react";
 
 // ✅ Securely fetching API URL from .env file
 // const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";;
 
 const LenderHeader = ({ onLogout, onToggleSidebar }) => {
   const { user } = useAuth();
