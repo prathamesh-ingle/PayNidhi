@@ -37,15 +37,23 @@ if (process.env.FRONTEND_URL) {
   allowedOrigins.push(process.env.FRONTEND_URL);
 }
 
+// 🌐 Bulletproof CORS Configuration
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173", 
-      "https://pay-nidhi.vercel.app"
-    ],
+    origin: function (origin, callback) {
+      // 1. Allow local development
+      // 2. Allow any URL that ends in .vercel.app
+      if (!origin || 
+          origin === "http://localhost:5173" || 
+          origin.endsWith(".vercel.app")) {
+        callback(null, true);
+      } else {
+        console.error(`❌ CORS blocked request from origin: ${origin}`);
+        callback(new Error("CORS policy blocked this request"));
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
 
