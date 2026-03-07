@@ -18,7 +18,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const LenderSettings = () => {
   const { user, logout } = useAuth();
@@ -74,7 +74,7 @@ const LenderSettings = () => {
     try {
       // 1. Update Profile Information
       // Note: Backend endpoint is shared. We send annualTurnover: 0 as backend expects it for validation fallback
-      const profileResponse = await fetch(`${API_BASE_URL}/api/auth/update-profile`, {
+      const profileResponse = await fetch(`${API_BASE_URL}/auth/update-profile`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -96,7 +96,7 @@ const LenderSettings = () => {
         const formData = new FormData();
         formData.append("avatar", avatarFile);
 
-        const avatarResponse = await fetch(`${API_BASE_URL}/api/auth/update-avatar`, {
+        const avatarResponse = await fetch(`${API_BASE_URL}/auth/update-avatar`, {
           method: "POST", 
           body: formData,
           credentials: "include",

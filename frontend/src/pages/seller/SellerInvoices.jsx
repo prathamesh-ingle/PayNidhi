@@ -186,7 +186,7 @@ const SellerInvoices = () => {
 
     try {
       // Replace this body with your actual file upload logic (FormData or Base64)
-      const res = await fetch(`${API_BASE_URL}/api/seller/invoice/${invoiceId}/upload-noa`, {
+      const res = await fetch(`${API_BASE_URL}/seller/invoice/${invoiceId}/upload-noa`, {
         method: "POST",
         // headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -238,7 +238,7 @@ const SellerInvoices = () => {
   const fetchMyInvoices = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_BASE_URL}/api/seller/invoices`, { credentials: "include" });
+      const res = await fetch(`${API_BASE_URL}/seller/invoices`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed to fetch invoices");
       const data = await res.json();
       setInvoices(data);
@@ -257,7 +257,7 @@ const SellerInvoices = () => {
   const handleVerifyBuyer = async (invoiceId) => {
     const toastId = toast.loading("Sending verification request...");
     try {
-      const res = await fetch(`${API_BASE_URL}/api/invoice/verify-buyer?invoiceId=${invoiceId}`, {
+      const res = await fetch(`${API_BASE_URL}/invoice/verify-buyer?invoiceId=${invoiceId}`, {
         method: "POST",
         credentials: "include",
       });
@@ -279,7 +279,7 @@ const SellerInvoices = () => {
     setLoadingBids(true);
     
     try {
-      const res = await fetch(`${API_BASE_URL}/api/seller/invoice/${invoice._id}/bids`, { credentials: "include" });
+      const res = await fetch(`${API_BASE_URL}/seller/invoice/${invoice._id}/bids`, { credentials: "include" });
       const responseData = await res.json();
       if (responseData.success) {
         setActiveBids(responseData.data.bids);
@@ -306,7 +306,7 @@ const SellerInvoices = () => {
   const handleBidAction = async (bidId, action) => {
     setProcessingId(bidId);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/seller/bid-response/${bidId}`, {
+      const res = await fetch(`${API_BASE_URL}/seller/bid-response/${bidId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

@@ -60,7 +60,7 @@ const UploadInvoice = () => {
   const fetchInvoices = useCallback(async () => {
     try {
       setIsLoadingInvoices(true);
-      const res = await fetch(`${API_BASE_URL}/api/seller/invoices`, {
+      const res = await fetch(`${API_BASE_URL}/seller/invoices`, {
         credentials: "include",
       });
       const data = await res.json();
@@ -123,7 +123,7 @@ const UploadInvoice = () => {
   const handleDeleteInvoice = async (id) => {
     if(!window.confirm("Are you sure you want to delete this invoice?")) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/api/invoice/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/invoice/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -164,7 +164,7 @@ const UploadInvoice = () => {
     formData.append("file", file);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/invoice/upload`, {
+      const res = await fetch(`${API_BASE_URL}/invoice/upload`, {
         method: "POST",
         body: formData,
         credentials: "include",
@@ -192,7 +192,7 @@ const UploadInvoice = () => {
   const handleVerifyInvoice = async (invoiceId) => {
     const loadingToast = toast.loading("Initiating buyer verification...");
     try {
-      const res = await fetch(`${API_BASE_URL}/api/invoice/verify-buyer?invoiceId=${invoiceId}`, {
+      const res = await fetch(`${API_BASE_URL}/invoice/verify-buyer?invoiceId=${invoiceId}`, {
         method: "POST",
         credentials: "include",
         headers: {

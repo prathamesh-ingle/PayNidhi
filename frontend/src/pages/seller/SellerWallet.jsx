@@ -48,7 +48,7 @@ const SellerWallet = () => {
   const fetchWallet = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_BASE_URL}/api/seller/wallet-data`, { credentials: "include" });
+      const res = await fetch(`${API_BASE_URL}/seller/wallet-data`, { credentials: "include" });
       const data = await res.json();
 
       if (data.success) {
@@ -91,7 +91,7 @@ const SellerWallet = () => {
 
     try {
       const startTime = Date.now();
-      const res = await fetch(`${API_BASE_URL}/api/seller/withdraw`, {
+      const res = await fetch(`${API_BASE_URL}/seller/withdraw`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

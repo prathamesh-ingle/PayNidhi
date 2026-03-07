@@ -10,7 +10,7 @@ const handleJson = async (res) => {
 };
 
 export const registerSeller = async (data) => {
-  const res = await fetch(`${API_BASE_URL}/api/auth/register-seller`, {
+  const res = await fetch(`${API_BASE_URL}/auth/register-seller`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -20,7 +20,7 @@ export const registerSeller = async (data) => {
 };
 
 export const loginSeller = async (data) => {
-  const res = await fetch(`${API_BASE_URL}/api/auth/login-seller`, {
+  const res = await fetch(`${API_BASE_URL}/auth/login-seller`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -30,7 +30,7 @@ export const loginSeller = async (data) => {
 };
 
 export const registerLender = async (data) => {
-  const res = await fetch(`${API_BASE_URL}/api/auth/register-lender`, {
+  const res = await fetch(`${API_BASE_URL}/auth/register-lender`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -40,7 +40,7 @@ export const registerLender = async (data) => {
 };
 
 export const loginLender = async (data) => {
-  const res = await fetch(`${API_BASE_URL}/api/auth/login-lender`, {
+  const res = await fetch(`${API_BASE_URL}/auth/login-lender`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -50,7 +50,7 @@ export const loginLender = async (data) => {
 };
 
 export const getMe = async () => {
-  const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+  const res = await fetch(`${API_BASE_URL}/auth/me`, {
     method: "GET",
     credentials: "include",
   });
@@ -58,7 +58,7 @@ export const getMe = async () => {
 };
 
 export const updateAvatar = async (avatarUrl) => {
-  const res = await fetch(`${API_BASE_URL}/api/auth/avatar`, {
+  const res = await fetch(`${API_BASE_URL}/auth/avatar`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -68,7 +68,7 @@ export const updateAvatar = async (avatarUrl) => {
 };
 
 export const requestOtp = async ({ email, purpose }) => {
-  const res = await fetch(`${API_BASE_URL}/api/auth/request-otp`, {
+  const res = await fetch(`${API_BASE_URL}/auth/request-otp`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, purpose }),
@@ -79,7 +79,7 @@ export const requestOtp = async ({ email, purpose }) => {
 export const verifyOtp = async (body) => {
   const isFormData = body instanceof FormData;
 
-  const res = await fetch(`${API_BASE_URL}/api/auth/verify-otp`, {
+  const res = await fetch(`${API_BASE_URL}/auth/verify-otp`, {
     method: "POST",
     credentials: "include",
     headers: isFormData ? undefined : { "Content-Type": "application/json" },
@@ -91,7 +91,7 @@ export const verifyOtp = async (body) => {
 
 export const loginAdmin = async (data) => {
   // Assuming your admin routes are mounted at /api/admin
-  const res = await fetch(`${API_BASE_URL}/api/admin/login`, {
+  const res = await fetch(`${API_BASE_URL}/admin/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -101,7 +101,7 @@ export const loginAdmin = async (data) => {
 };
 
 export const verifyAdminOtp = async (data) => {
-  const res = await fetch(`${API_BASE_URL}/api/admin/verify`, {
+  const res = await fetch(`${API_BASE_URL}/admin/verify`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",

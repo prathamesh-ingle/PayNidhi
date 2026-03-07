@@ -10,7 +10,6 @@ import {
 
 // const API_BASE_URL = "http://localhost:5001";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
 // ✅ ADDED: Custom PDF Viewer that securely fetches the file and stops auto-downloading
 const SafePdfViewer = ({ filePath, className, fallbackSize = 40 }) => {
   const [pdfUrl, setPdfUrl] = useState(null);
@@ -101,7 +100,7 @@ const LenderMarketplace = () => {
   const fetchMarketplace = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_BASE_URL}/api/lender/marketplace`, { credentials: "include" });
+      const res = await fetch(`${API_BASE_URL}/lender/marketplace`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed to fetch marketplace data");
       const data = await res.json();
       setInvoices(data);
@@ -142,7 +141,7 @@ const LenderMarketplace = () => {
 
     setIsBidding(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/lender/bid/${selectedInvoice._id}`, {
+      const res = await fetch(`${API_BASE_URL}/lender/bid/${selectedInvoice._id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

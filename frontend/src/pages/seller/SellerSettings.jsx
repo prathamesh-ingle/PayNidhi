@@ -72,7 +72,7 @@ const SellerSettings = () => {
 
     try {
       // 1. Update Profile Information
-      const profileResponse = await fetch(`${API_BASE_URL}/api/auth/update-profile`, {
+      const profileResponse = await fetch(`${API_BASE_URL}/auth/update-profile`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -94,7 +94,7 @@ const SellerSettings = () => {
         const formData = new FormData();
         formData.append("avatar", avatarFile);
 
-        const avatarResponse = await fetch(`${API_BASE_URL}/api/auth/update-avatar`, {
+        const avatarResponse = await fetch(`${API_BASE_URL}/auth/update-avatar`, {
           method: "POST", 
           body: formData,
           credentials: "include",

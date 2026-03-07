@@ -60,7 +60,7 @@ const LenderWallet = () => {
   const fetchWallet = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_BASE_URL}/api/lender/wallet`, { credentials: "include" });
+      const res = await fetch(`${API_BASE_URL}/lender/wallet`, { credentials: "include" });
       const data = await res.json();
 
       if (data.success) {
@@ -103,7 +103,7 @@ const LenderWallet = () => {
 
     try {
       const startTime = Date.now();
-      const res = await fetch(`${API_BASE_URL}/api/lender/withdraw`, {
+      const res = await fetch(`${API_BASE_URL}/lender/withdraw`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

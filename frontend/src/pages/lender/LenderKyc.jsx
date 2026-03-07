@@ -98,7 +98,7 @@ const LenderKyc = () => {
     try {
       setLoading(true);
 
-      const res = await fetch(`${API_BASE_URL}/api/lender/kyc-verification`, {
+      const res = await fetch(`${API_BASE_URL}/lender/kyc-verification`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

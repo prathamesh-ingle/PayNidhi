@@ -43,7 +43,7 @@ app.use("/api/invoice", invoiceRoutes);
 app.use("/api/lender", lenderRoutes);
 app.use("/api/seller", sellerRoutes);
 app.use("/api/payment", paymentRoutes);
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/api", sellerDashboardRoutes);
 
 const PORT = process.env.PORT || 5001;

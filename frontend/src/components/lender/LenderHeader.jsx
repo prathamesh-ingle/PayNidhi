@@ -25,7 +25,7 @@ const LenderHeader = ({ onLogout, onToggleSidebar }) => {
     .slice(0, 2)
     .toUpperCase();
 
-  let avatarSrc = "/avatars/avatar-1.png";
+  let avatarSrc = "/avatars/avatars-1.png";
   if (user?.avatarUrl) {
     avatarSrc = user.avatarUrl.startsWith("/uploads") 
       ? `${API_BASE_URL}${user.avatarUrl}` 

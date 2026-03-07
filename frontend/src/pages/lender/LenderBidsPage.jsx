@@ -54,7 +54,7 @@ const LenderBids = () => {
   const fetchMyBids = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_BASE_URL}/api/lender/my-bids`, { credentials: "include" });
+      const res = await fetch(`${API_BASE_URL}/lender/my-bids`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed to fetch bids");
       const data = await res.json();
       setMyBids(data);
@@ -74,7 +74,7 @@ const LenderBids = () => {
     try {
       toast.loading("Initializing payment gateway...", { id: "payment-loading" });
 
-      const response = await fetch(`${API_BASE_URL}/api/payment/create-order`, {
+      const response = await fetch(`${API_BASE_URL}/payment/create-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -99,7 +99,7 @@ const LenderBids = () => {
           try {
             toast.loading("Verifying payment...", { id: "verify-loading" });
 
-            const verifyRes = await fetch(`${API_BASE_URL}/api/payment/verify`, {
+            const verifyRes = await fetch(`${API_BASE_URL}/payment/verify`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               credentials: "include",

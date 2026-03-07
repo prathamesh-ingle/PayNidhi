@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import SellerNav from "../../components/seller/SellerNav";
 import SellerHeader from "../../components/seller/SellerHeader";
 import SellerFooter from "../../components/seller/SellerFooter";
+
 import {
   ArrowRight, ShieldCheck, UploadCloud, FileText, X, CheckCircle2,
   Sparkles, AlertCircle, Search, Loader2, Zap, Store, Wallet,
@@ -132,7 +133,7 @@ const SellerDashboard = () => {
       try {
         setLoadingSummary(true);
         setSummaryError(null);
-        const res = await fetch(`${API_BASE_URL}/api/seller/dashboard-summary`, { credentials: "include" });
+        const res = await fetch(`${API_BASE_URL}/seller/dashboard-summary`, { credentials: "include" });
         if (!res.ok) throw new Error("Failed to load dashboard data");
         const data = await res.json();
         if (isMounted) setSummary(data);
@@ -164,7 +165,7 @@ const SellerDashboard = () => {
       try {
         setLoadingInvoices(true);
         setInvoiceError(null);
-        const res = await fetch(`${API_BASE_URL}/api/invoice/my`, { credentials: "include" });
+        const res = await fetch(`${API_BASE_URL}/invoice/my`, { credentials: "include" });
         if (!res.ok) throw new Error("Failed to load invoices");
         const data = await res.json();
         if (isMounted) setInvoices(Array.isArray(data) ? data : []);
@@ -268,7 +269,7 @@ const SellerDashboard = () => {
     formData.append("file", file);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/invoice/upload`, {
+      const res = await fetch(`${API_BASE_URL}/invoice/upload`, {
         method: "POST",
         body: formData,
         credentials: "include",
@@ -351,36 +352,43 @@ const SellerDashboard = () => {
     </div>
   );
 
-  const renderScanningState = () => (
-    <div className="py-4 sm:py-6 flex flex-col animate-in fade-in duration-500 max-w-md mx-auto relative z-20">
-      <div className="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 sm:mb-8 flex items-center justify-center">
-        <div className="absolute inset-0 bg-[#0f8f79] rounded-full blur-2xl animate-pulse opacity-20" />
-        <div className="absolute inset-2 bg-gradient-to-tr from-[#0f8f79] via-[#47C4B7] to-[#C9EFE6] rounded-full animate-spin" style={{ animationDuration: "3s" }} />
-        <div className="absolute inset-3 bg-white rounded-full flex items-center justify-center shadow-inner">
-          <Sparkles className="text-[#0f8f79] animate-pulse" size={20} className="sm:w-[24px] sm:h-[24px]" />
-        </div>
-      </div>
-      <h3 className="text-base sm:text-lg font-semibold text-slate-900 text-center mb-1">Analyzing Document</h3>
-      <p className="text-[10px] sm:text-[11px] text-slate-500 text-center mb-5 sm:mb-6">Cross-referencing entities and risk patterns.</p>
-      <div className="w-full h-1.5 rounded-full bg-slate-100 overflow-hidden mb-5 sm:mb-6">
-        <div className="h-full bg-gradient-to-r from-[#0f8f79] to-[#47C4B7] transition-all duration-700 ease-out" style={{ width: `${((scanStepIndex + 1) / SCAN_STEPS.length) * 100}%` }} />
-      </div>
-      <div className="space-y-1.5 sm:space-y-2">
-        {SCAN_STEPS.map((stepText, idx) => {
-          const isPast = idx < scanStepIndex;
-          const isCurrent = idx === scanStepIndex;
-          return (
-            <div key={idx} className={`flex items-center gap-2.5 sm:gap-3 rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 transition-all duration-300 ${isCurrent ? "bg-[#F3FBF9] border border-[#7FE0CC]/40" : "bg-transparent border border-transparent"}`}>
-              <div className="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center shrink-0">
-                {isPast ? <CheckCircle2 className="text-[#0f8f79]" size={14} className="sm:w-[16px] sm:h-[16px]" /> : isCurrent ? <Loader2 className="text-[#47C4B7] animate-spin" size={14} className="sm:w-[16px] sm:h-[16px]" /> : <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-slate-200" />}
-              </div>
-              <p className={`text-[9px] sm:text-[11px] truncate ${isCurrent ? "font-semibold text-[#0f8f79]" : isPast ? "font-medium text-slate-500" : "font-medium text-slate-400"}`}>{stepText}</p>
-            </div>
-          );
-        })}
+ const renderScanningState = () => (
+  <div className="py-4 sm:py-6 flex flex-col animate-in fade-in duration-500 max-w-md mx-auto relative z-20">
+    <div className="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 sm:mb-8 flex items-center justify-center">
+      <div className="absolute inset-0 bg-[#0f8f79] rounded-full blur-2xl animate-pulse opacity-20" />
+      <div className="absolute inset-2 bg-gradient-to-tr from-[#0f8f79] via-[#47C4B7] to-[#C9EFE6] rounded-full animate-spin" style={{ animationDuration: "3s" }} />
+      <div className="absolute inset-3 bg-white rounded-full flex items-center justify-center shadow-inner">
+        <Sparkles className="text-[#0f8f79] animate-pulse sm:w-[24px] sm:h-[24px]" size={20}  />
       </div>
     </div>
-  );
+    <h3 className="text-base sm:text-lg font-semibold text-slate-900 text-center mb-1">Analyzing Document</h3>
+    <p className="text-[10px] sm:text-[11px] text-slate-500 text-center mb-5 sm:mb-6">Cross-referencing entities and risk patterns.</p>
+    <div className="w-full h-1.5 rounded-full bg-slate-100 overflow-hidden mb-5 sm:mb-6">
+      <div className="h-full bg-gradient-to-r from-[#0f8f79] to-[#47C4B7] transition-all duration-700 ease-out" style={{ width: `${((scanStepIndex + 1) / SCAN_STEPS.length) * 100}%` }} />
+    </div>
+    <div className="space-y-1.5 sm:space-y-2">
+      {SCAN_STEPS.map((stepText, idx) => {
+        const isPast = idx < scanStepIndex;
+        const isCurrent = idx === scanStepIndex;
+        return (
+          <div key={idx} className={`flex items-center gap-2.5 sm:gap-3 rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 transition-all duration-300 ${isCurrent ? "bg-[#F3FBF9] border border-[#7FE0CC]/40" : "bg-transparent border border-transparent"}`}>
+            <div className="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center shrink-0">
+              {/* FIXED SECTION BELOW */}
+              {isPast ? (
+                <CheckCircle2 className="text-[#0f8f79] sm:w-[16px] sm:h-[16px]" />
+              ) : isCurrent ? (
+                <Loader2 className="text-[#47C4B7] animate-spin sm:w-[16px] sm:h-[16px]" size={14} />
+              ) : (
+                <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-slate-200" />
+              )}
+            </div>
+            <p className={`text-[9px] sm:text-[11px] truncate ${isCurrent ? "font-semibold text-[#0f8f79]" : isPast ? "font-medium text-slate-500" : "font-medium text-slate-400"}`}>{stepText}</p>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+);
 
   const renderSuccessState = () => (
     <div className="animate-in zoom-in-95 duration-500 text-center py-2 sm:py-4 max-w-sm mx-auto relative z-20">

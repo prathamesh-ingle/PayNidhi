@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Use the environment variable with a local fallback for development
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // 📄 Secure PDF Viewer Component
 const SecureAdminPdfViewer = ({ filePath }) => {

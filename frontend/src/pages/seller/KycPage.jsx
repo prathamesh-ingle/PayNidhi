@@ -94,7 +94,7 @@ const KycPage = () => {
     try {
       setLoading(true);
 
-      const res = await fetch(`${API_BASE_URL}/api/seller/kyc-verification`, {
+      const res = await fetch(`${API_BASE_URL}/seller/kyc-verification`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
