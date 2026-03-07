@@ -1,4 +1,4 @@
-//frontend/src/pages/auth/LoginPage.jsx
+// frontend/src/pages/auth/LoginPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -35,9 +35,10 @@ const LoginPage = () => {
 
     try {
       const fn = mode === "seller" ? loginSeller : loginLender;
+      
+      // ✅ This now verifies the password AND sends the OTP from the backend
       await fn(form);
 
-      await requestOtp({ email: form.email, purpose: "login" });
       toast.success("Verification code sent to your email");
       setStep(2);
     } catch (err) {
