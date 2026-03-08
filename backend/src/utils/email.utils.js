@@ -4,14 +4,38 @@ dotenv.config();
 import nodemailer from "nodemailer";
 
 // 🔥 FIX 1: Forced port 465 and secure: true to bypass cloud firewalls blocking port 587
-export const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  host: 'smtp.gmail.com',
   port: 465,
   secure: true, 
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_APP_PASS,
   },
+  debug: true, // 👈 Add this to see details in Render logs
+  logger: true, // 👈 Add this
+  connectionTimeout: 10000, // 10 seconds
+  greetingTimeout: 10000,
+  tls: {
+    rejectUnauthorized: false 
+  }
+});const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true, 
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASS,
+  },
+  debug: true, // 👈 Add this to see details in Render logs
+  logger: true, // 👈 Add this
+  connectionTimeout: 10000, // 10 seconds
+  greetingTimeout: 10000,
+  tls: {
+    rejectUnauthorized: false 
+  }
 });
 
 export const sendOtpEmail = async ({ to, code }) => {
