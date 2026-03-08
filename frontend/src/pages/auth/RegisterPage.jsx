@@ -1,12 +1,10 @@
-// frontend/src/pages/auth/RegisterPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// ✅ IMPORT ADDED: Added registerSeller and registerLender
-import { requestOtp, verifyOtp, registerSeller, registerLender } from "../../api/authApi";
+import { requestOtp, verifyOtp } from "../../api/authApi";
 import { useAuth } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import OtpVerifyCard from "../../components/auth/OtpVerifyCard";
-import { ShieldCheck, Camera } from "lucide-react"; 
+import { ShieldCheck, Camera } from "lucide-react"; // Added Camera for the avatar icon
 
 const RegisterPage = () => {
   const [mode, setMode] = useState("seller");
@@ -20,8 +18,8 @@ const RegisterPage = () => {
     industry: "",
     annualTurnover: "",
     beneficiaryName: "",
-    lenderType: "", 
-    lenderLicense: "", 
+    lenderType: "", // Added for lender
+    lenderLicense: "", // Added for lender
   });
   const [error, setError] = useState("");
   const [avatarFile, setAvatarFile] = useState(null);
@@ -69,18 +67,11 @@ const RegisterPage = () => {
     }
 
     try {
-      // ✅ FIX: Instead of raw requestOtp, run the strict GST/RBI Validation 
-      // which safely sends the OTP from the backend if validation passes.
-      if (isSeller) {
-        await registerSeller(form);
-      } else {
-        await registerLender(form);
-      }
-      
+      await requestOtp({ email: form.email, purpose: "register" });
       toast.success("✅ Verification code sent to your email");
       setStep(2);
     } catch (err) {
-      const msg = err?.error || "Registration validation failed";
+      const msg = err?.error || "Failed to send OTP";
       setError(msg);
       toast.error(msg);
     } finally {

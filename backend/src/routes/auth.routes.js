@@ -1,79 +1,40 @@
 import express from "express";
-import Admin from "../models/Admin.model.js";
-
-// Import your admin controllers
 import {
-  loginAdmin,
-  verifyAdminLogin,
-  getPlatformStats,
-  getAllSellers,
-  getAllLenders,
-  getPendingNOAInvoices,
-  verifyNOA,
-  toggleUserStatus,
-  getAllTransactionsAdmin,
-  getAllFinancesAdmin,
-  getAllInvoicesAdmin,
-  processBuyerRepayment,
-  triggerManualSettlement
-} from "../controllers/admin.controller.js";
+  registerSeller,
+  loginSeller,
+  registerLender,
+  loginLender,
+  getMe,
+  updateAvatar,
+  updateProfile,
+  requestOtp,
+  verifyOtp,
+} from "../controllers/auth.controller.js";
+import { protect } from "../middleware/auth.middleware.js";
+import { uploadAvatar } from "../middleware/avatarUpload.middleware.js";
+import { upload } from "../middleware/upload.middleware.js"; // ✅ FIXED: Added curly braces
 
 const router = express.Router();
 
-// ==========================================
-// TEMPORARY SETUP: CREATE MASTER ADMIN
-// ==========================================
-// Hit this route ONCE from your browser to save the admin to MongoDB
-router.get("/create-master-admin", async (req, res) => {
-  try {
-    const adminExists = await Admin.findOne({
-      email: "ingleprathamesh34@gmail.com",
-    });
-    if (adminExists) {
-      return res.json({
-        message: "Admin already exists in the database! You can go log in.",
-      });
-    }
+// Seller Routes
+router.post("/register-seller", registerSeller);
+router.post("/login-seller", loginSeller);
 
-    // This creates the admin and triggers the password hash in your model
-    await Admin.create({
-      name: "Master Admin",
-      email: "ingleprathamesh34@gmail.com",
-      password: "Admin@123",
-      role: "superadmin",
-    });
+// Lender Routes
+router.post("/register-lender", registerLender);
+router.post("/login-lender", loginLender);
 
-    res.json({
-      success: true,
-      message:
-        "Master Admin created successfully! Go to your frontend and log in.",
-    });
-  } catch (error) {
-    console.error("Setup Error:", error);
-    res.status(500).json({ error: error.message });
-  }
-});
+// Get current user from cookie
+router.get("/me", protect, getMe);
 
-// ACTUAL ADMIN AUTH ROUTES
-// ==========================================
-// We map these to the functions you already wrote in your controller
-router.post("/login", loginAdmin);
-router.post("/verify", verifyAdminLogin);
+// Avatar & Profile updates
+router.put("/avatar", protect, updateAvatar);
+router.put("/update-profile", protect, updateProfile);
+// ✅ FIXED: Uses uploadAvatar middleware (which allows images) instead of upload (which only allows PDFs)
+router.post("/update-avatar", protect, uploadAvatar, updateAvatar); 
 
-// ==========================================
-// DASHBOARD & MANAGEMENT ROUTES
-// ==========================================
-router.get("/stats", getPlatformStats);
-router.get("/sellers", getAllSellers);
-router.get("/lenders", getAllLenders);
-router.get("/invoices/pending-noa", getPendingNOAInvoices);
-router.patch("/invoice/:id/verify-noa", verifyNOA);
-// router.post("/invoice/:id/settle", processBuyerRepayment);
-router.patch("/user/:role/:id/toggle", toggleUserStatus);
-router.get("/transactions", getAllTransactionsAdmin);
-router.get("/finances", getAllFinancesAdmin);
-router.get("/ledger", getAllInvoicesAdmin);
-router.post("/:id/process-repayment", processBuyerRepayment);
-router.post("/trigger-settlement",triggerManualSettlement);
+// OTP
+router.post("/request-otp", requestOtp);
+router.post("/verify-otp", uploadAvatar, verifyOtp);
 
 export default router;
